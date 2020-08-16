@@ -17,7 +17,7 @@ class TotoList extends Component {
           value={this.state.inputValue}
           onChange={this.handleInputChange.bind(this)}
         />
-          <button onClick={this.onClick.bind(this)}>提交</button>
+          <button onClick={this.onClick.bind(this)}>submit</button>
         </div>
         <ul>
           {
