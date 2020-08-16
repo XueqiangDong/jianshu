@@ -1,4 +1,6 @@
 import React, {Component, Fragment} from 'react';
+import TotoItem from "./TotoItem";
+import './style.css'
 
 class TotoList extends Component {
 
@@ -8,46 +10,72 @@ class TotoList extends Component {
       inputValue: '',
       list: []
     }
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.onClick = this.onClick.bind(this)
+    this.onDelete = this.onDelete.bind(this)
   }
 
   render() {
     return (
       <Fragment>
-        <div><input
-          value={this.state.inputValue}
-          onChange={this.handleInputChange.bind(this)}
-        />
-          <button onClick={this.onClick.bind(this)}>submit</button>
+        <div>
+          <label htmlFor='input'>Type your word:</label>
+          <input
+            id='input'
+            className='input'
+            value={this.state.inputValue}
+            onChange={this.handleInputChange}
+          />
+          <button onClick={this.onClick}>submit</button>
         </div>
         <ul>
-          {
-            this.state.list.map((item, index) => {
-              return <li key={index} onClick={this.onDelete.bind(this, index)}>{item}</li>
-            })
-          }
+          {this.getTodoItem()}
         </ul>
       </Fragment>
     );
   }
 
-  handleInputChange(e) {
-    this.setState({
-      inputValue: e.target.value
+  getTodoItem() {
+    return this.state.list.map((item, index) => {
+      return (
+        <li key={index}>
+          <TotoItem
+            item={item}
+            index={index}
+            onDelete={this.onDelete}
+          />
+        </li>
+        // <li
+        //   key={index}
+        //   onClick={this.onDelete.bind(this, index)}
+        //   dangerouslySetInnerHTML={{__html: item}}
+        // >
+        // </li>)
+      )
     })
+  }
+
+  handleInputChange(e) {
+    let value = e.target.value
+    this.setState(() => ({
+      inputValue: value
+    }))
   }
 
   onClick() {
-    this.setState({
-      list: [...this.state.list, this.state.inputValue],
+    this.setState((preState) => ({
+      list: [...preState.list, preState.inputValue],
       inputValue: ''
-    })
+    }))
   }
 
   onDelete(index) {
-    let list = [...this.state.list]
-    list.splice(index, 1)
-    this.setState({
-      list: list
+    this.setState((preState) => {
+      let list = [...preState.list]
+      list.splice(index, 1)
+      return {
+        list
+      }
     })
   }
 }
