@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import 'antd/dist/antd.css'
 import { Input, Button, List } from 'antd'
 import store from './store'
+import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_ITEM } from './store/actionTypes'
 
 class TodoList extends Component {
 
@@ -32,7 +33,7 @@ class TodoList extends Component {
         <List
           bordered
           dataSource={this.state.list}
-          renderItem={item => (<List.Item>{item}</List.Item>)}
+          renderItem={(item, index) => (<List.Item onClick={this.onDelete.bind(this, index)}>{item}</List.Item>)}
           style={{width: '300px'}}
         />
       </Fragment>
@@ -41,14 +42,14 @@ class TodoList extends Component {
 
   onClick() {
     let action = {
-      type: 'add_todo_item'
+      type: ADD_TODO_ITEM
     }
     store.dispatch(action)
   }
 
   onChange(e) {
     let action = {
-      type: 'change_input_value',
+      type: CHANGE_INPUT_VALUE,
       value: e.target.value
     }
     store.dispatch(action)
@@ -56,6 +57,14 @@ class TodoList extends Component {
 
   handleStoreChange() {
     this.setState(store.getState())
+  }
+
+  onDelete(index) {
+    let action = {
+      type: DELETE_ITEM,
+      index
+    }
+    store.dispatch(action)
   }
 }
 
