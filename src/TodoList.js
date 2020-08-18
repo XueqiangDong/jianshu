@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import 'antd/dist/antd.css'
 import { Input, Button, List } from 'antd'
 import store from './store'
-import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_ITEM } from './store/actionTypes'
+import { addItemAction, deleteItemAction, getInputAction } from "./store/actionCreator"
 
 class TodoList extends Component {
 
@@ -41,17 +41,12 @@ class TodoList extends Component {
   }
 
   onClick() {
-    let action = {
-      type: ADD_TODO_ITEM
-    }
+    let action = addItemAction()
     store.dispatch(action)
   }
 
   onChange(e) {
-    let action = {
-      type: CHANGE_INPUT_VALUE,
-      value: e.target.value
-    }
+    let action = getInputAction(e.target.value)
     store.dispatch(action)
   }
 
@@ -60,10 +55,7 @@ class TodoList extends Component {
   }
 
   onDelete(index) {
-    let action = {
-      type: DELETE_ITEM,
-      index
-    }
+    let action = deleteItemAction(index)
     store.dispatch(action)
   }
 }
