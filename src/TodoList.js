@@ -11,6 +11,9 @@ class TodoList extends Component {
     this.onClick = this.onClick.bind(this)
     this.onChange = this.onChange.bind(this)
     this.handleStoreChange = this.handleStoreChange.bind(this)
+  }
+
+  componentWillMount() {
     store.subscribe(this.handleStoreChange)
   }
 
@@ -20,7 +23,7 @@ class TodoList extends Component {
         <div>
           <Input
             value={this.state.inputValue}
-            placeHolder='toto'
+            placeholder='toto'
             onChange={this.onChange}
             style={{width: '300px'}}
           />
@@ -43,17 +46,16 @@ class TodoList extends Component {
     store.dispatch(action)
   }
 
-  onChange() {
-    // let action = {
-    //   type: 'add_todo_item'
-    // }
-    // store.dispatch(action)
+  onChange(e) {
+    let action = {
+      type: 'change_input_value',
+      value: e.target.value
+    }
+    store.dispatch(action)
   }
 
   handleStoreChange() {
-    this.setState((preState) => ({
-      // return store.getState()
-    }))
+    this.setState(store.getState())
   }
 }
 
