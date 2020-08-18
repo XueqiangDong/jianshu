@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TotoList from './TotoList';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <TotoList />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

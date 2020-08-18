@@ -1,5 +1,23 @@
-.input {
-  border: 1px solid red;
-  margin-left: 10px;
-  margin-right: 10px;
+.show {
+  opacity: 1;
+}
+
+.hide {
+  opacity: 0;
+  animation: hide-item 2s ease-out forwards;
+}
+
+@keyframes hide-item {
+  0% {
+    opacity: 1;
+    color: red;
+  }
+  50% {
+    opacity: 0.5;
+    color: green;
+  }
+  100% {
+    opacity: 0;
+    color: blue;
+  }
 }
