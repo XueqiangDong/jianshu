@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react'
 import 'antd/dist/antd.css'
 import { Input, Button, List } from 'antd'
 import store from './store'
-import { addItemAction, deleteItemAction, getInputAction, getTodoList } from "./store/actionCreator"
+import { addItemAction, deleteItemAction, getInputAction, getTodoList, initListAction } from "./store/actionCreator"
+
 
 class TodoList extends Component {
 
