@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react'
 import 'antd/dist/antd.css'
 import { Input, Button, List } from 'antd'
 import store from './store'
-import { addItemAction, deleteItemAction, getInputAction } from "./store/actionCreator"
+import { addItemAction, deleteItemAction, getInputAction, initListAction } from "./store/actionCreator"
+import axios from 'axios'
 
 class TodoList extends Component {
 
@@ -38,6 +39,19 @@ class TodoList extends Component {
         />
       </Fragment>
     )
+  }
+
+  componentDidMount() {
+    let onSuccess = (res) => {
+      let data = res.data
+      let action = initListAction(data)
+      store.dispatch(action)
+    }
+    let onError = (error) => {
+      console.log(',,', error)
+    }
+    axios.get('http://localhost:3001/list')
+      .then(onSuccess)
   }
 
   onClick() {
