@@ -1,12 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import store from "./store";
 import { connect } from 'react-redux'
 
 class TodoList extends Component {
-
-  componentWillMount() {
-    // store.subscribe(this.handleStoreChange)
-  }
 
   render() {
     return (
@@ -16,7 +11,7 @@ class TodoList extends Component {
           <button>submit</button>
         </div>
         <ul>
-          <li>helo</li>
+          <li>hello</li>
         </ul>
       </Fragment>
     )
