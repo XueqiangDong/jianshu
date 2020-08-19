@@ -23,6 +23,8 @@ export const Logo = styled.a.attrs({
 export const Nav = styled.div`
   width: 960px;
   height: 100%;
+  padding-right: 70px;
+  box-sizing: border-box;
   margin: 0 auto;
 `
 
@@ -43,11 +45,47 @@ export const NavItem = styled.div`
   }
 `;
 
-export const NavSearch = styled.input`
+export const NavSearch = styled.input.attrs({
+  placeholder: 'Search'
+})`
   width: 160px;
+  margin-top: 9px;
+  margin-left: 20px;
+  padding: 0 20px;
+  box-sizing: border-box;
   height: 38px;
   border: none;
   outline: none;
   border-radius: 19px;
-  background: green;
+  background: #eee;
+  font-size: 14px;
+  &::placeholder {
+    color: #999;
+  }
+`;
+
+export const Addition = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 56px;
+  
+`;
+
+export const Button = styled.div`
+  float: right;
+  line-height: 38px;
+  padding: 0 20px;
+  margin-top: 9px;
+  margin-right: 20px;
+  border-radius: 19px;
+  border: 1px solid #ec6149;
+  font-size: 14px;
+  &.reg {
+    color: #ec6149;
+  }
+  &.writing {
+    color: #fff;
+    background: #ec6149;
+  }
 `;
