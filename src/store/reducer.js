@@ -1,30 +1,12 @@
-import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_ITEM, INIT_LIST } from './actionTypes'
-
 const defaultState = {
-  inputValue: '',
+  inputValue: 'hello world',
   list: []
 }
 
 export default (state = defaultState, action) => {
-  if (action.type === CHANGE_INPUT_VALUE) {
+  if (action.type === 'change_input_value') {
     let newState = JSON.parse(JSON.stringify(state))
     newState.inputValue = action.value
-    return newState
-  }
-  if (action.type === INIT_LIST) {
-    let newState = JSON.parse(JSON.stringify(state))
-    newState.list = action.data
-    return newState
-  }
-  if (action.type === ADD_TODO_ITEM) {
-    let newState = JSON.parse(JSON.stringify(state))
-    newState.list.push(newState.inputValue)
-    newState.inputValue = ''
-    return newState
-  }
-  if (action.type === DELETE_ITEM) {
-    let newState = JSON.parse(JSON.stringify(state))
-    newState.list.splice(action.index, 1)
     return newState
   }
   return state
