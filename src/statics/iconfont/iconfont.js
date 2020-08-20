@@ -18,4 +18,4 @@ export const GlobalStyleIconFont = createGlobalStyle`
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-`
+`;
