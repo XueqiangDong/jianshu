@@ -27,7 +27,12 @@ class Header extends Component {
         <SearchInfo onMouseEnter={mouseInEvent} onMouseLeave={mouseOut}>
           <SearchInfoTitle>
             热门搜索
-            <SearchInfoSwitch onClick={() => changePage(page, totalPage)}>换一批</SearchInfoSwitch>
+            <SearchInfoSwitch onClick={() => changePage(page, totalPage, this.iconSpin)}>
+              <span ref={(icon) => {
+                this.iconSpin = icon
+              }} className={'spin iconfont'}>&#xe610;</span>
+              换一批
+            </SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoList>
             {
@@ -42,7 +47,7 @@ class Header extends Component {
   }
 
   render() {
-    const {focused, onBlur, onFocus} = this.props
+    const {focused, onBlur, list, onFocus} = this.props
     return (
       <HeaderWrapper>
         <Logo/>
@@ -61,11 +66,11 @@ class Header extends Component {
             >
               <NavSearch
                 className={focused ? 'focused' : 'unfocused'}
-                onFocus={onFocus}
+                onFocus={() => onFocus(list)}
                 onBlur={onBlur}
               />
             </CSSTransition>
-            <span className={focused ? 'focused iconfont' : 'unfocused iconfont'}>&#xe610;</span>
+            <span className={focused ? 'focused iconfont zoom' : 'unfocused iconfont zoom'}>&#xe610;</span>
             {this.getListArea(focused)}
           </SearchWrapper>
         </Nav>
@@ -93,8 +98,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onFocus: () => {
-      dispatch(actionCreators.getList())
+    onFocus: (list) => {
+      if (!(list.size > 0))
+        dispatch(actionCreators.getList())
       dispatch(store.actionCreators.searchFocus())
     },
     onBlur: () => {
@@ -106,7 +112,14 @@ const mapDispatchToProps = (dispatch) => {
     mouseOut: () => {
       dispatch(store.actionCreators.mouseOut())
     },
-    changePage: (page, totalPage) => {
+    changePage: (page, totalPage, spin) => {
+      let angle = spin.style.transform.replace(/[^0-9]/gi, '')
+      if (angle) {
+        angle = parseInt(angle, 10)
+      } else {
+        angle = 0
+      }
+      spin.style.transform = 'rotate(' + (angle + 360) + 'deg)'
       if (page + 1 < totalPage)
         dispatch(store.actionCreators.changePage(page + 1))
       else
