@@ -47,7 +47,8 @@ class Header extends Component {
   }
 
   render() {
-    const {focused, onBlur, list, onFocus} = this.props
+    const {focused, onBlur, list, onFocus, mouseIn} = this.props
+    let expended = (focused || mouseIn)
     return (
       <HeaderWrapper>
         <Logo/>
@@ -60,17 +61,17 @@ class Header extends Component {
           </NavItem>
           <SearchWrapper>
             <CSSTransition
-              in={focused}
+              in={expended}
               timeout={200}
               classNames='slide'
             >
               <NavSearch
-                className={focused ? 'focused' : 'unfocused'}
+                className={expended ? 'focused' : 'unfocused'}
                 onFocus={() => onFocus(list)}
-                onBlur={onBlur}
+                onBlur={() => onBlur(mouseIn)}
               />
             </CSSTransition>
-            <span className={focused ? 'focused iconfont zoom' : 'unfocused iconfont zoom'}>&#xe610;</span>
+            <span className={expended ? 'focused iconfont zoom' : 'unfocused iconfont zoom'}>&#xe610;</span>
             {this.getListArea(focused)}
           </SearchWrapper>
         </Nav>
@@ -103,7 +104,7 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(actionCreators.getList())
       dispatch(store.actionCreators.searchFocus())
     },
-    onBlur: () => {
+    onBlur: (mouseIn) => {
       dispatch(store.actionCreators.searchBlur())
     },
     mouseInEvent: () => {
