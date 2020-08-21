@@ -12,19 +12,26 @@ import { actionCreators } from "./store";
 
 class Header extends Component {
   getListArea = () => {
-    const {focused, list} = this.props
-    if (focused) {
+    const {focused, list, page, totalPage, mouseIn, mouseInEvent, mouseOut, changePage} = this.props
+    const jsList = list.toJS()
+    let pageList = []
+    if (jsList.length) {
+      for (let i = page * 10; i < (page + 1) * 10; i++) {
+        pageList.push(
+          <SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>
+        )
+      }
+    }
+    if (focused || mouseIn) {
       return (
-        <SearchInfo>
+        <SearchInfo onMouseEnter={mouseInEvent} onMouseLeave={mouseOut}>
           <SearchInfoTitle>
             热门搜索
-            <SearchInfoSwitch>换一批</SearchInfoSwitch>
+            <SearchInfoSwitch onClick={() => changePage(page, totalPage)}>换一批</SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoList>
             {
-              list.map((item) => {
-                return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-              })
+              pageList
             }
           </SearchInfoList>
         </SearchInfo>
@@ -77,7 +84,10 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return {
     focused: state.getIn(['header', 'focused']),
-    list: state.getIn(['header', 'list'])
+    list: state.getIn(['header', 'list']),
+    page: state.getIn(['header', 'page']),
+    totalPage: state.getIn(['header', 'totalPage']),
+    mouseIn: state.getIn(['header', 'mouseIn']),
   }
 };
 
@@ -89,6 +99,18 @@ const mapDispatchToProps = (dispatch) => {
     },
     onBlur: () => {
       dispatch(store.actionCreators.searchBlur())
+    },
+    mouseInEvent: () => {
+      dispatch(store.actionCreators.mouseInEvent())
+    },
+    mouseOut: () => {
+      dispatch(store.actionCreators.mouseOut())
+    },
+    changePage: (page, totalPage) => {
+      if (page + 1 < totalPage)
+        dispatch(store.actionCreators.changePage(page + 1))
+      else
+        dispatch(store.actionCreators.changePage(0))
     }
   }
 };
