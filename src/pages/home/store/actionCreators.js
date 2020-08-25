@@ -2,45 +2,23 @@ import * as constants from './constants'
 import axios from 'axios'
 import { fromJS } from 'immutable'
 
-export const searchFocus = () => ({
-  type: constants.SEARCH_FOCUS
-})
-
-export const searchBlur = () => ({
-  type: constants.SEARCH_BLUR
-})
-
-const changeList = (data) => {
+const changeHomeData = (data) => {
   return {
-    type: constants.CHANGE_LIST,
-    data: fromJS(data),
-    totalPage: Math.ceil(data.length / 10)
+    type: constants.CHANGE_HOME_DATA,
+    data: fromJS(data)
   }
 }
 
-export const mouseInEvent = () => ({
-  type: constants.MOUSE_IN
-})
-
-export const changePage = (page) => ({
-  type: constants.CHANGE_PAGE,
-  page
-})
-
-export const mouseOut = () => ({
-  type: constants.MOUSE_OUT
-})
-
-export const getList = () => {
+export const getHomeData = () => {
   return (dispatch) => {
     let onSuccess = (res) => {
       let data = res.data
-      dispatch(changeList(data))
+      dispatch(changeHomeData(data))
     }
     let onError = (res) => {
       console.warn('no data')
     }
-    axios.get('http://localhost:3001/list')
+    axios.get('http://localhost:3001/home')
       // axios.get('/api/list.json')
       .then(onSuccess, onError)
   }
