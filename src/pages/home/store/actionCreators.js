@@ -9,6 +9,30 @@ const changeHomeData = (data) => {
   }
 }
 
+const moreList = (data, page) => {
+  return {
+    type: constants.MORE_LIST,
+    data: fromJS(data),
+    page
+  }
+}
+
+export const loadMoreAction = (page) => {
+  console.warn(page)
+  return (dispatch) => {
+    let onSuccess = (res) => {
+      let data = res.data
+      dispatch(moreList(data, page + 1))
+    }
+    let onError = (res) => {
+      console.warn('no data')
+    }
+    axios.get('http://localhost:3001/more')
+      // axios.get('/api/list.json')
+      .then(onSuccess, onError)
+  }
+}
+
 export const getHomeData = () => {
   return (dispatch) => {
     let onSuccess = (res) => {
