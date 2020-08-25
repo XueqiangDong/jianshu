@@ -32,6 +32,11 @@ export const loadMoreAction = (page) => {
   }
 }
 
+export const toggleTopShow = (show) => ({
+  type: constants.TOGGLE_SCROLL_TOP,
+  show
+})
+
 export const getHomeData = () => {
   return (dispatch) => {
     let onSuccess = (res) => {
