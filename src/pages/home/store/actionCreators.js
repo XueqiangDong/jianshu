@@ -18,7 +18,6 @@ const moreList = (data, page) => {
 }
 
 export const loadMoreAction = (page) => {
-  console.warn(page)
   return (dispatch) => {
     let onSuccess = (res) => {
       let data = res.data
